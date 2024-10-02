@@ -160,24 +160,26 @@ void setup()
   {
     Serial.println("gfx->begin() failed!");
   }
-  tsec = millis();
-  gfx->fillScreen(BLACK);
-  Serial.printf("#fill time = %l ms\r\n",millis()-tsec);
+  else {
+    Serial.println("gfx->begin() okay");
+    pinMode(GFX_BL, OUTPUT);
+    digitalWrite(GFX_BL, HIGH);
+    tsec = millis();
+    gfx->fillScreen(BLACK);
+    Serial.printf("#fill time = %ld ms\r\n",millis()-tsec);
 
-#ifdef GFX_BL
-  pinMode(GFX_BL, OUTPUT);
-  digitalWrite(GFX_BL, HIGH);
-#endif
-
-  gfx->setCursor(10, 10);
-  gfx->setTextColor(RED);
-  gfx->println("Hello World!");
+    gfx->displayOn();
+    gfx->setCursor(10, 10);
+    gfx->setTextColor(RED);
+    gfx->println("Hello World!");
+    gfx->flush();
+  }
   tsec = millis();
 } 
 
 void loop()
 {
-  boolean istouched = ts.touched();
+  //boolean istouched = touch_touched();
   //if (istouched) {
   //  TS_Point p = ts.getPoint();
   //  Serial.printf("#Touch %d,%d  z=%d\r\n",p.x,p.y,p.z);
